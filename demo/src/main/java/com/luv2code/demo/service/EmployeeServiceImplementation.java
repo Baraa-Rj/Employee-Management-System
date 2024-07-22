@@ -18,11 +18,13 @@ public class EmployeeServiceImplementation implements EmployeeService {
 
     @Autowired
     public EmployeeServiceImplementation(EmployeeRepository theEmployeeRepository) {
+        System.out.println("EmployeeServiceImplementation: " + theEmployeeRepository);
         this.employeeRepository = theEmployeeRepository;
     }
 
     @Override
     public Page<Employee> findAll(Pageable pageable) {
+        System.out.println("EmployeeServiceImplementation: " + employeeRepository);
         return employeeRepository.findAll(pageable);
     }
 
