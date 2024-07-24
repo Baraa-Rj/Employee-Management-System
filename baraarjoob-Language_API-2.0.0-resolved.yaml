@@ -1,0 +1,111 @@
+openapi: 3.0.0
+info:
+  title: home-iot-api
+  description: An API dedicated for home IoT
+  termsOfService: https://smartbear.com/term-of-use
+  contact:
+    name: Baraa
+    url: https://smartbear.com
+    email: baraarjoob17@gmail.com
+  license:
+    name: Smart Bear License
+    url: http://license.info.com
+  version: 2.0.0
+servers:
+- url: https://dev.foo.com/v1
+  description: Dev Server
+- url: https://prod.foo.com/v1
+  description: Prod Server
+paths:
+  /employees:
+    get:
+      description: Obtain information from HR database
+      parameters:
+      - name: bodyLimit
+        in: query
+        description: The amount of employees returned
+        required: false
+        style: form
+        explode: true
+        schema:
+          maximum: 20
+          minimum: 10
+          type: integer
+          example: 15
+      - name: pageLimit
+        in: query
+        description: The pages to return employees returned
+        required: false
+        style: form
+        explode: true
+        schema:
+          maximum: 5
+          minimum: 1
+          type: integer
+          example: 2
+      responses:
+        "200":
+          description: Successful
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/inline_response_200'
+    post:
+      description: Create a new employee in the database
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/employees_body'
+        required: true
+      responses:
+        "200":
+          description: Employee created successfully
+  /employee/{id}:
+    get:
+      description: Obtain information about a specific employee
+      parameters:
+      - name: id
+        in: path
+        description: The ID of an Employee
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          example: 54
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/employees_body'
+components:
+  schemas:
+    inline_response_200:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 4
+        employeeName:
+          type: string
+          example: Baraa Rjoub
+        employeeTitle:
+          type: string
+          example: Market Manager
+    employees_body:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        employeeName:
+          type: string
+          example: Baraa Rjoub
+        employeeTitle:
+          type: string
+          example: Market Manager
